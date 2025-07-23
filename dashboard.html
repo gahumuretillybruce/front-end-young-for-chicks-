@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manager Dashboard</title>
+  <style>
+    body {
+      background-image: url(chicken-picture.jpg);
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    aside {
+      width: 260px;
+      background: #1f2937;
+      color: white;
+      padding: 20px;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    nav a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      border-radius: 6px;
+      margin-top: 10px;
+    }
+
+    nav a:hover,
+    nav a.active {
+      background: #374151;
+      color: orange;
+    }
+
+    main {
+      flex: 1;
+      padding: 2rem;
+      background: #f3f4f6;
+    }
+
+    h1, h2 {
+      color: #1f2937;
+    }
+
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .card {
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      margin-top: 1rem;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    thead {
+      background: #e5e7eb;
+    }
+
+    .btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .btn-approve { background: #10b981; }
+    .btn-reject { background: #ef4444; }
+
+    input[type='text'] {
+      padding: 8px;
+      width: 100%;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+
+<body>
+  <aside>
+    <div class="logo">YOUNG 4<span style="color: orange;">CHICKS</span></div>
+    <nav>
+      <a href="#dashboard" class="active">Dashboard</a>
+      <a href="#chick-stock">Chick Stock</a>
+      <a href="#requests">Requests</a>
+      <a href="#farmers">Farmers</a>
+    </nav>
+  </aside>
+
+  <main>
+    <section id="dashboard">
+      <h1>Dashboard</h1>
+      <div class="card-container">
+        <div class="card"><p>Total Stock</p><h2>5,000</h2></div>
+        <div class="card"><p>Total Requests</p><h2>320</h2></div>
+        <div class="card"><p>Approved</p><h2>270</h2></div>
+        <div class="card"><p>Pending</p><h2>50</h2></div>
+        <div class="card"><p>Young Farmers</p><h2>142</h2></div>
+      </div>
+    </section>
+
+    <section id="chick-stock">
+      <h2>Chick Stock Management</h2>
+      <table>
+        <thead>
+          <tr><th>Type</th><th>Breed</th><th>Quantity</th><th>Date Added</th><th>Age (days)</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section id="requests">
+      <h2>Pending Requests</h2>
+      <table>
+        <thead>
+          <tr><th>Name</th><th>Type</th><th>Chicks</th><th>Farmer Type</th><th>Action</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section id="farmers">
+      <h2>Farmer Records</h2>
+      <input type="text" placeholder="Search by name or NIN..." />
+      <table>
+        <thead>
+          <tr><th>Name</th><th>NIN</th><th>Recommender</th><th>Total Chicks</th><th>Last Pickup</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const stockData = [
+        { type: 'Broiler', breed: 'Exotic', quantity: 1200, dateAdded: '2025-06-15', age: 14 },
+        { type: 'Layer', breed: 'Local', quantity: 800, dateAdded: '2025-06-10', age: 19 },
+        { type: 'Broiler', breed: 'Hybrid', quantity: 1500, dateAdded: '2025-06-20', age: 9 }
+      ];
+
+      const requestData = [
+        { name: 'Jane Doe', type: 'Layer', chicks: 100, farmerType: 'Starter' },
+        { name: 'John Smith', type: 'Broiler', chicks: 150, farmerType: 'Returning' }
+      ];
+
+      const farmerData = [
+        { name: 'John Farmer', nin: 'CM9203xxxxxx', recommender: 'Hon. Kate', totalChicks: 300, lastPickup: '2025-04-12' },
+        { name: 'Mary Johnson', nin: 'CM9204xxxxxx', recommender: 'Hon. James', totalChicks: 450, lastPickup: '2025-05-15' }
+      ];
+
+      const stockTable = document.querySelector('#chick-stock tbody');
+      stockData.forEach(item => {
+        stockTable.innerHTML += `<tr>
+          <td>${item.type}</td><td>${item.breed}</td><td>${item.quantity}</td>
+          <td>${item.dateAdded}</td><td>${item.age}</td></tr>`;
+      });
+
+      const requestTable = document.querySelector('#requests tbody');
+      requestData.forEach(item => {
+        requestTable.innerHTML += `<tr>
+          <td>${item.name}</td><td>${item.type}</td><td>${item.chicks}</td>
+          <td>${item.farmerType}</td>
+          <td>
+            <button class="btn btn-approve">Approve</button>
+            <button class="btn btn-reject">Reject</button>
+          </td></tr>`;
+      });
+
+      document.querySelectorAll('.btn-approve').forEach(btn => {
+        btn.addEventListener('click', function () {
+          alert("Request approved");
+          this.closest('tr').remove();
+        });
+      });
+
+      document.querySelectorAll('.btn-reject').forEach(btn => {
+        btn.addEventListener('click', function () {
+          alert("Request rejected");
+          this.closest('tr').remove();
+        });
+      });
+
+      const farmerTable = document.querySelector('#farmers tbody');
+      farmerData.forEach(item => {
+        farmerTable.innerHTML += `<tr>
+          <td>${item.name}</td><td>${item.nin}</td><td>${item.recommender}</td>
+          <td>${item.totalChicks}</td><td>${item.lastPickup}</td></tr>`;
+      });
+
+      const searchInput = document.querySelector('#farmers input');
+      searchInput.addEventListener('input', function () {
+        const search = this.value.toLowerCase();
+        farmerTable.querySelectorAll('tr').forEach(row => {
+          row.style.display = row.textContent.toLowerCase().includes(search) ? '' : 'none';
+        });
+      });
+    });
+  </script>
+</body>
+</html>

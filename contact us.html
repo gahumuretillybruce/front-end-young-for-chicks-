@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body, html {
+      height: 100%;
+      background:url(chicken-picture.jpg); 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .contact-form {
+      background-color: rgba(0, 0, 128, 0.6);
+      padding: 30px;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 600px;
+      color: white;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .form-group {
+      position: relative;
+      flex: 1;
+    }
+
+    .form-group i {
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      transform: translateY(-50%);
+      color: #fff;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px 10px 10px 35px;
+      background: transparent;
+      border: 1px solid white;
+      border-radius: 5px;
+      color: white;
+    }
+
+    .form-group textarea {
+      resize: none;
+      height: 100px;
+    }
+
+    .submit-btn {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .submit-btn button {
+      background: transparent;
+      color: white;
+      border: 1px solid white;
+      padding: 10px 25px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .submit-btn button i {
+      margin-left: 5px;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #ddd;
+    }
+  </style>
+</head>
+<body>
+  <form class="contact-form">
+    <div class="form-row">
+      <div class="form-group">
+        <i class="fas fa-user"></i>
+        <input type="text" placeholder="Your Name" required />
+      </div>
+      <div class="form-group">
+        <i class="fas fa-phone"></i>
+        <input type="text" placeholder="Phone No." required />
+      </div>
+    </div>
+
+    <div class="form-group" style="margin-bottom: 15px;">
+      <i class="fas fa-envelope"></i>
+      <input type="email" placeholder="Email Id" required />
+    </div>
+
+    <div class="form-group" style="margin-bottom: 15px;">
+      <i class="fas fa-comment-dots"></i>
+      <textarea placeholder="Your Message" required></textarea>
+    </div>
+
+    <div class="submit-btn">
+      <button type="submit">
+        SUBMIT <i class="fas fa-paper-plane"></i>
+      </button>
+    </div>
+  </form>
+</body>
+</html>

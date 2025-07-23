@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: orange;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Registered Young Farmers</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Full Name</th>
+        <th>Age</th>
+        <th>Gender</th>
+        <th>NIN</th>
+        <th>Recommender</th>
+        <th>Recommender NIN</th>
+        <th>Contact</th>
+      </tr>
+    </thead>
+    <tbody id="userTableBody">
+      <!-- Rows will be inserted here by JavaScript -->
+    </tbody>
+  </table>
+
+  <script>
+    const users = JSON.parse(localStorage.getItem("registeredUsers")) || [];
+    const tbody = document.getElementById("userTableBody");
+
+    if (users.length === 0) {
+      tbody.innerHTML = "<tr><td colspan='7'>No registered users found.</td></tr>";
+    } else {
+      users.forEach(user => {
+        const row = `
+          <tr>
+            <td>${user.fullname}</td>
+            <td>${user.age}</td>
+            <td>${user.gender}</td>
+            <td>${user.nin}</td>
+            <td>${user.recommender}</td>
+            <td>${user.recommenderNIN}</td>
+            <td>${user.contact}</td>
+          </tr>
+        `;
+        tbody.innerHTML += row;
+      });
+    }
+  </script>
+
+</body>
+</html>  

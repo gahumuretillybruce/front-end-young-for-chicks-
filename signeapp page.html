@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Farmer Sign Up</title>
+  <style>
+    body {
+      margin: 0;
+      background: url(chicken-picture.jpg) no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: sans-serif;
+    }
+
+    .form-container {
+      background: rgba(0, 0, 0, 0.85);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 700px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .form-group {
+      flex: 1 1 45%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    label, input, select {
+      margin-top: 10px;
+      padding: 8px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    input, select {
+      background: #333;
+      color: white;
+    }
+
+    .form-button {
+      width: 100%;
+      padding: 10px;
+      background: orange;
+      border: none;
+      border-radius: 5px;
+      margin-top: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .login-link a {
+      color: orange;
+    }
+
+    @media (max-width: 600px) {
+      .form-group {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <form class="form-container" id="signupForm">
+    <h2>Young 4Chicks - Sign Up</h2>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="fullname" required>
+      </div>
+
+      <div class="form-group">
+        <label>Age (18–30)</label>
+        <input type="number" id="age" min="18" max="30" required>
+      </div>
+
+      <div class="form-group">
+        <label>Gender</label>
+        <select id="gender" required>
+          <option value="">Select</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Farmer NIN</label>
+        <input type="text" id="farmerNIN" required>
+      </div>
+
+      <div class="form-group">
+        <label>Recommender Name</label>
+        <input type="text" id="recommenderName" required>
+      </div>
+
+      <div class="form-group">
+        <label>Recommender NIN</label>
+        <input type="text" id="recommenderNIN" required>
+      </div>
+
+      <div class="form-group">
+        <label>Contact</label>
+        <input type="text" id="contact" required>
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="email" required>
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="password" required>
+      </div>
+    </div>
+
+    <button class="form-button" type="submit">Register</button>
+
+    <div class="login-link">
+      Already have an account? <a href="login.html">Login</a>
+    </div>
+  </form>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('signupForm');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const data = {
+          name: document.getElementById('fullname').value,
+          age: parseInt(document.getElementById('age').value),
+          gender: document.getElementById('gender').value,
+          contact: document.getElementById('contact').value,
+          recommenderName: document.getElementById('recommenderName').value,
+          recommenderNIN: document.getElementById('recommenderNIN').value,
+          farmerNIN: document.getElementById('farmerNIN').value,
+          email: document.getElementById('email').value,
+          password: document.getElementById('password').value
+        };
+
+        if (data.age < 18 || data.age > 30) {
+          alert('Age must be between 18 and 30.');
+          return;
+        }
+
+        try {
+          const response = await fetch('http://localhost:5000/api/farmers/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+
+          const result = await response.json();
+
+          if (!response.ok) {
+            throw new Error(result.error || result.message || 'Registration failed');
+          }
+
+          alert('Registration successful');
+          setTimeout(() => {
+            window.location.href = 'login.html';
+          }, 1500);
+        } catch (error) {
+          alert('Error: ' + error.message);
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
