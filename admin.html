@@ -1,17 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Admin Dashboard</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f4f4f4;
+      background-color: #f8f9fa;
       padding: 20px;
     }
 
-    h1 {
+    h1, h2 {
       color: #333;
+    }
+
+    .summary-boxes {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .box {
+      background: orange;
+      color: white;
+      flex: 1;
+      padding: 20px;
+      border-radius: 5px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
     }
 
     table {
@@ -36,51 +53,138 @@
     tr:nth-child(even) {
       background-color: #f9f9f9;
     }
+
+    .footer {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 14px;
+      color: #777;
+    }
   </style>
 </head>
 <body>
 
-  <h1>Registered Young Farmers</h1>
+  <h1>System Admin Dashboard</h1>
+
+  <!-- Summary Stats -->
+  <div class="summary-boxes">
+    <div class="box" id="farmerCount">Farmers: 0</div>
+    <div class="box" id="stockCount">Total Chicks in Stock: 0</div>
+    <div class="box" id="requestCount">Pending Requests: 0</div>
+  </div>
+
+  <!-- Registered Farmers -->
+  <h2>Registered Young Farmers</h2>
   <table>
     <thead>
       <tr>
-        <th>Full Name</th>
+        <th>Name</th>
         <th>Age</th>
         <th>Gender</th>
         <th>NIN</th>
-        <th>Recommender</th>
-        <th>Recommender NIN</th>
         <th>Contact</th>
       </tr>
     </thead>
-    <tbody id="userTableBody">
-      <!-- Rows will be inserted here by JavaScript -->
+    <tbody id="farmerTableBody">
+      <!-- Populated by JS -->
     </tbody>
   </table>
 
-  <script>
-    const users = JSON.parse(localStorage.getItem("registeredUsers")) || [];
-    const tbody = document.getElementById("userTableBody");
+  <!-- Chick Stock Overview -->
+  <h2>Chick Stock Overview</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Breed</th>
+        <th>Quantity</th>
+        <th>Age (days)</th>
+      </tr>
+    </thead>
+    <tbody id="stockTableBody">
+      <!-- Populated by JS -->
+    </tbody>
+  </table>
 
-    if (users.length === 0) {
-      tbody.innerHTML = "<tr><td colspan='7'>No registered users found.</td></tr>";
-    } else {
-      users.forEach(user => {
-        const row = `
-          <tr>
-            <td>${user.fullname}</td>
-            <td>${user.age}</td>
-            <td>${user.gender}</td>
-            <td>${user.nin}</td>
-            <td>${user.recommender}</td>
-            <td>${user.recommenderNIN}</td>
-            <td>${user.contact}</td>
-          </tr>
-        `;
-        tbody.innerHTML += row;
-      });
-    }
+  <!-- Requests Overview -->
+  <h2>Chick Requests</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Farmer NIN</th>
+        <th>Farmer Type</th>
+        <th>Chick Type</th>
+        <th>Breed</th>
+        <th>Quantity</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="requestTableBody">
+      <!-- Populated by JS -->
+    </tbody>
+  </table>
+
+  <div class="footer">
+    © 2025 Young4ChickS Admin System
+  </div>
+
+  <script>
+    // Load data from localStorage
+    const farmers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
+    const stock = JSON.parse(localStorage.getItem("chickStock")) || [];
+    const requests = JSON.parse(localStorage.getItem("chickRequests")) || [];
+
+    // Fill Farmer Table
+    const farmerTbody = document.getElementById("farmerTableBody");
+    farmers.forEach(farmer => {
+      farmerTbody.innerHTML += `
+        <tr>
+          <td>${farmer.fullname}</td>
+          <td>${farmer.age}</td>
+          <td>${farmer.gender}</td>
+          <td>${farmer.nin}</td>
+          <td>${farmer.contact}</td>
+        </tr>
+      `;
+    });
+
+    // Fill Stock Table
+    const stockTbody = document.getElementById("stockTableBody");
+    let totalStock = 0;
+    stock.forEach(item => {
+      totalStock += item.quantity;
+      stockTbody.innerHTML += `
+        <tr>
+          <td>${item.type}</td>
+          <td>${item.breed}</td>
+          <td>${item.quantity}</td>
+          <td>${item.age}</td>
+        </tr>
+      `;
+    });
+
+    // Fill Requests Table
+    const requestTbody = document.getElementById("requestTableBody");
+    let pendingCount = 0;
+    requests.forEach(req => {
+      if (req.status === "pending") pendingCount++;
+      requestTbody.innerHTML += `
+        <tr>
+          <td>${req.nin}</td>
+          <td>${req.farmerType}</td>
+          <td>${req.chickType}</td>
+          <td>${req.breedType}</td>
+          <td>${req.quantity}</td>
+          <td>${req.status}</td>
+        </tr>
+      `;
+    });
+
+    // Update Summary Boxes
+    document.getElementById("farmerCount").innerText = `Farmers: ${farmers.length}`;
+    document.getElementById("stockCount").innerText = `Total Chicks in Stock: ${totalStock}`;
+    document.getElementById("requestCount").innerText = `Pending Requests: ${pendingCount}`;
   </script>
 
 </body>
-</html>  
+</html>

@@ -1,0 +1,41 @@
+extends layouts/layout
+
+block content
+  .form-container
+    h2 Young 4Chicks - Sign Up
+    form#signupForm(action="/api/farmers/signup" method="POST")
+      .form-grid
+        .form-group
+          label Full Name
+          input(type="text" name="name" required)
+        .form-group
+          label Age (18–30)
+          input(type="number" name="age" min="18" max="30" required)
+        .form-group
+          label Gender
+          select(name="gender" required)
+            option(value="") Select
+            option(value="male") Male
+            option(value="female") Female
+        .form-group
+          label Farmer NIN
+          input(type="text" name="farmerNIN" required)
+        .form-group
+          label Recommender Name
+          input(type="text" name="recommenderName" required)
+        .form-group
+          label Recommender NIN
+          input(type="text" name="recommenderNIN" required)
+        .form-group
+          label Contact
+          input(type="text" name="contact" required)
+        .form-group
+          label Email
+          input(type="email" name="email" required)
+        .form-group
+          label Password
+          input(type="password" name="password" required)
+      button.form-button(type="submit") Register
+    .login-link
+      | Already have an account? 
+      a(href="/login") Login

@@ -1,0 +1,66 @@
+extends layouts/layout
+
+block content
+  h1 Manager Dashboard
+  .card-container
+    each stat in stats
+      .card
+        p= stat.label
+        h2= stat.value
+
+  h2 Chick Stock Management
+  table
+    thead
+      tr
+        th Type
+        th Breed
+        th Quantity
+        th Date Added
+        th Age (days)
+    tbody
+      each stock in stocks
+        tr
+          td= stock.type
+          td= stock.breed
+          td= stock.quantity
+          td= stock.dateAdded
+          td= stock.age
+
+  h2 Pending Requests
+  table
+    thead
+      tr
+        th Name
+        th Type
+        th Chicks
+        th Farmer Type
+        th Action
+    tbody
+      each request in requests
+        tr
+          td= request.name
+          td= request.type
+          td= request.chicks
+          td= request.farmerType
+          td
+            button.btn.btn-approve Approve
+            button.btn.btn-reject Reject
+
+  h2 Farmer Records
+  input(type="text", placeholder="Search by name or NIN...")
+  table
+    thead
+      tr
+        th Name
+        th NIN
+        th Recommender
+        th Total Chicks
+        th Last Pickup
+    tbody
+      each farmer in farmers
+        tr
+          td= farmer.name
+          td= farmer.nin
+          td= farmer.recommender
+          td= farmer.totalChicks
+          td= farmer.lastPickup

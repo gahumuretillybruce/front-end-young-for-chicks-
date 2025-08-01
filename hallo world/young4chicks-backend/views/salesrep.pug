@@ -1,0 +1,46 @@
+extends layouts/layout
+
+block content
+  h1 Sales Rep Dashboard
+
+  section#incoming
+    h2 Incoming Request
+    form(action="/requests/submit" method="POST")
+      label(for="nin") Farmer NIN
+      input#nin(type="text" name="farmerNIN")
+
+      label(for="name") Name (Auto-filled)
+      input#name(type="text" disabled)
+
+      label(for="chicks") Number of Chicks
+      input#chicks(type="number" name="numberOfChicks")
+
+      label(for="type") Chick Type
+      select#type(name="chickType")
+        option Broiler
+        option Layer
+
+      label(for="farmerType") Farmer Type
+      select#farmerType(name="farmerType")
+        option Starter
+        option Returning
+
+      button.btn(type="submit") Submit Request
+
+  section#tracker
+    h2 Request Tracker
+    table
+      thead
+        tr
+          th Name
+          th NIN
+          th Chicks
+          th Type
+          th Status
+          th Action
+      tbody
+
+  section#log
+    h2 Communication Log
+    textarea(rows="5" placeholder="Enter notes or call summary...")
+    button.btn Save Note

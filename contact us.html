@@ -1,121 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Contact Us</title>
+  <title>Request Chicks</title>
   <style>
-    * {
+    body {
       margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
-
-    body, html {
-      height: 100%;
-      background:url(chicken-picture.jpg); 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-image: url(chicken-picture-min.jpg);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-    }
-
-    .contact-form {
-      background-color: rgba(0, 0, 128, 0.6);
-      padding: 30px;
-      border-radius: 10px;
-      width: 80%;
-      max-width: 600px;
-      color: white;
-    }
-
-    .form-row {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 15px;
-    }
-
-    .form-group {
       position: relative;
-      flex: 1;
+      overflow: hidden;
     }
 
-    .form-group i {
-      position: absolute;
-      top: 50%;
-      left: 10px;
-      transform: translateY(-50%);
-      color: #fff;
+    /* Dark overlay to dim the background */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      /* 50% black */
+      z-index: 0;
+      pointer-events: none;
     }
 
-    .form-group input,
-    .form-group textarea {
+    .request-form {
+      position: relative;
+      background: #fff;
+      padding: 35px 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(255, 102, 0, 0.2);
       width: 100%;
-      padding: 10px 10px 10px 35px;
-      background: transparent;
-      border: 1px solid white;
-      border-radius: 5px;
-      color: white;
+      max-width: 480px;
+      margin-top: 30px;
+      color: #333;
+      font-weight: 500;
+      transition: box-shadow 0.3s ease;
+      z-index: 1;
+      /* above the overlay */
     }
 
-    .form-group textarea {
-      resize: none;
-      height: 100px;
+    .request-form:hover {
+      box-shadow: 0 12px 30px rgba(255, 102, 0, 0.35);
     }
 
-    .submit-btn {
+    h2 {
       text-align: center;
+      margin-bottom: 25px;
+      color: #ff6600;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      font-size: 28px;
+    }
+
+    label {
+      display: block;
       margin-top: 15px;
+      font-size: 15px;
+      color: #555;
     }
 
-    .submit-btn button {
-      background: transparent;
-      color: white;
-      border: 1px solid white;
-      padding: 10px 25px;
-      border-radius: 5px;
-      cursor: pointer;
+    input,
+    select {
+      width: 100%;
+      padding: 12px 14px;
+      margin-top: 6px;
+      border-radius: 6px;
+      border: 1.8px solid #ffae68;
       font-size: 16px;
+      color: #333;
+      outline-offset: 2px;
+      transition: border-color 0.3s ease;
+      box-sizing: border-box;
     }
 
-    .submit-btn button i {
-      margin-left: 5px;
+    input:focus,
+    select:focus {
+      border-color: #ff6600;
+      box-shadow: 0 0 6px rgba(255, 102, 0, 0.6);
     }
 
-    input::placeholder,
-    textarea::placeholder {
-      color: #ddd;
+    button {
+      width: 100%;
+      padding: 14px 0;
+      background: #ff6600;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 17px;
+      color: white;
+      margin-top: 28px;
+      cursor: pointer;
+      letter-spacing: 0.9px;
+      box-shadow: 0 6px 12px rgba(255, 102, 0, 0.3);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #e65c00;
+      box-shadow: 0 8px 18px rgba(230, 92, 0, 0.45);
     }
   </style>
 </head>
+
 <body>
-  <form class="contact-form">
-    <div class="form-row">
-      <div class="form-group">
-        <i class="fas fa-user"></i>
-        <input type="text" placeholder="Your Name" required />
-      </div>
-      <div class="form-group">
-        <i class="fas fa-phone"></i>
-        <input type="text" placeholder="Phone No." required />
-      </div>
-    </div>
 
-    <div class="form-group" style="margin-bottom: 15px;">
-      <i class="fas fa-envelope"></i>
-      <input type="email" placeholder="Email Id" required />
-    </div>
+  <form class="request-form" id="chickRequestForm">
+    <h2>Request Chicks</h2>
 
-    <div class="form-group" style="margin-bottom: 15px;">
-      <i class="fas fa-comment-dots"></i>
-      <textarea placeholder="Your Message" required></textarea>
-    </div>
+    <label for="number">Number of Chicks</label>
+    <input type="number" id="number" required min="1" />
 
-    <div class="submit-btn">
-      <button type="submit">
-        SUBMIT <i class="fas fa-paper-plane"></i>
-      </button>
-    </div>
+    <label for="type">Chick Type</label>
+    <select id="type" required>
+      <option value="">Select type</option>
+      <option value="broiler">Broiler</option>
+      <option value="layer">Layer</option>
+    </select>
+
+    <label for="breed">Breed</label>
+    <select id="breed" required>
+      <option value="">Select breed</option>
+      <option value="local">Local</option>
+      <option value="exotic">Exotic</option>
+    </select>
+
+    <label for="farmerType">Farmer Type</label>
+    <select id="farmerType" required>
+      <option value="farmer">Select farmer type</option>
+      <option value="starter">Starter</option>
+      <option value="returning">Returning</option>
+    </select>
+
+    <label for="farmerEmail">Your Registered Email</label>
+    <input type="email" id="farmerEmail" placeholder="Email used in signup" required />
+
+    <button type="submit">Submit Request</button>
   </form>
+
+  <script>
+    document.getElementById('chickRequestForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const requestData = {
+        email: document.getElementById('farmerEmail').value.trim(),
+        numberOfChicks: parseInt(document.getElementById('number').value, 10),
+        chickType: document.getElementById('type').value,
+        breed: document.getElementById('breed').value,
+        farmerType: document.getElementById('farmerType').value,
+      };
+
+      try {
+        const res = await fetch('http://localhost:5000/api/requests/new', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(requestData)
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          alert('Request submitted successfully!');
+          document.getElementById('chickRequestForm').reset();
+        } else {
+          alert(data.message || 'Request failed');
+        }
+      } catch (err) {
+        alert('Server error. Try again.');
+        console.error(err);
+      }
+    });
+  </script>
+
 </body>
+
 </html>

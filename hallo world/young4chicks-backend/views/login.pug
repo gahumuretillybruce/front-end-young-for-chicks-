@@ -1,0 +1,25 @@
+extends layouts/layout
+
+block content
+  .login-container
+    .welcome-section
+      .logo YOUNG 4<span>CHICKS</span>
+      h1 Welcome to Our Website!
+      p Kickstart Your Empire — One Chick at a Time, Backed by Purpose. Built for Profit.
+    .sign-in-section
+      h2 Sign In
+      form.login-form#loginForm(action="/api/auth/login" method="POST")
+        .input-group
+          label(for="email") Email
+          input(type="email" name="email" required)
+        .input-group
+          label(for="password") Password
+          input(type="password" name="password" required)
+        .options
+          label
+            input(type="checkbox") Remember Me
+          a.forgot-password(href="#") Forgot Password?
+        button.login-button(type="submit") Log In
+      .signup-link
+        | Don't have an account? 
+        a(href="/signup") Sign Up

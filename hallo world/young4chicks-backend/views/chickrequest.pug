@@ -1,0 +1,31 @@
+extends layouts/layout
+
+block content
+  form.request-form#chickRequestForm(action="/api/requests/new", method="POST")
+    h2 Request Chicks
+
+    label(for="number") Number of Chicks
+    input(type="number", id="number", name="numberOfChicks", required, min="1")
+
+    label(for="type") Chick Type
+    select(id="type", name="chickType", required)
+      option(value="") Select type
+      option(value="broiler") Broiler
+      option(value="layer") Layer
+
+    label(for="breed") Breed
+    select(id="breed", name="breed", required)
+      option(value="") Select breed
+      option(value="local") Local
+      option(value="exotic") Exotic
+
+    label(for="farmerType") Farmer Type
+    select(id="farmerType", name="farmerType", required)
+      option(value="") Select farmer type
+      option(value="starter") Starter
+      option(value="returning") Returning
+
+    label(for="email") Your Registered Email
+    input(type="email", id="email", name="email", placeholder="Email used in signup", required)
+
+    button(type="submit") Submit Request
